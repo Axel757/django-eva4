@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Mesa(models.Model):
     numero = models.IntegerField(unique=True)
-    capacidad_personas = models.IntegerField()
+    capacidad_personas = models.IntegerField([MinValueValidator(1), MaxValueValidator(15)])
 
     def __str__(self):
         return f"Mesa {self.numero}"

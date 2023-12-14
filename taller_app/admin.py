@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(Persona)
+
+admin.site.register(Cliente)
 
 @admin.register(Mesa)
 class MesaAdmin(admin.ModelAdmin):
@@ -9,6 +10,6 @@ class MesaAdmin(admin.ModelAdmin):
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ('nombre_persona', 'fecha_reserva', 'hora_reserva', 'estado', 'mesa_asignada')
+    list_display = ('nombre_cliente', 'fecha_reserva', 'hora_reserva', 'estado', 'mesa_asignada')
     
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/cliente.css' %}">
+    <title>Listado de Clientes</title>
+</head>
+
+<body>
+    <div id="header-container">
+        <div id="catalog-logo">
+            <a href="{% url 'verReservas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}" class="restaurant-logo" alt="Logo"></a>
+        </div>
+        <div id="catalog-title" class="text-center">
+            <H1 class="title">LISTADO DE CLIENTES</H1>
+        </div>
+    </div>
+    <br>
+
+    <div class="results">
+        <table id="result_list" class="table table-bordered">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th scope="col" class="sortable column-nombre">
+                        <div class="text">Nombre</div>
+                        <div class="clear"></div>
+                    </th>
+                    <th scope="col" class="sortable column-telefono">
+                        <div class="text">Teléfono</div>
+                        <div class="clear"></div>
+                    </th>
+                    <th scope="col" class="sortable column-reservas">
+                        <div class="text"><a href="{% url 'verReservas' %}">Reservas</a></div>
+                        <div class="clear"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td class="field-nombre nowrap">
+                        <h5>{{ cliente.nombre }}</a></h5>
+                    </td>
+                    <td class="field-telefono nowrap">+56 {{ cliente.telefono }}</td>
+                    <td class="field-reservas nowrap">
+                        {% for reserva in cliente.reserva_set.all %}
+                        <a href="">
+                            {{ reserva.id_reserva }}: {{ reserva.fecha_reserva }} </a><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

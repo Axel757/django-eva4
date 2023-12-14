@@ -110,9 +110,11 @@ a {
 }
 
 .formulario {
+
     position: relative;
     width: 1080px;
-
+    margin-left: 80px;
+    margin-top: 50px;
 
 }
 

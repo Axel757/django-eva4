@@ -3,6 +3,34 @@ from taller_app.models import *
 from django.core import validators
 from django.core.validators import MinValueValidator, MaxLengthValidator
 
+class MesaForm(forms.ModelForm):
+    class Meta:
+        model = Mesa
+        fields = ['numero', 'capacidad_personas', 'estado']
+
+    def clean_numero(self):
+        numero = self.cleaned_data.get('numero')
+        if Mesa.objects.filter(numero=numero).exists():
+            raise forms.ValidationError('Este número de mesa ya está en uso.')
+        return numero
+
+
+class FormCliente(forms.ModelForm):
+    nombre = forms.CharField(
+        label='Nombre del Cliente',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del cliente'}),
+    )
+    
+    telefono = forms.CharField(
+        label='Teléfono',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el número de teléfono'}),
+    )
+
+    class Meta:
+        model = Cliente
+        fields = ['nombre', 'telefono']
+
+
 class FormReserva(forms.ModelForm):
     nombre_cliente = forms.ModelChoiceField(
         label='Nombre del Cliente',

@@ -29,6 +29,10 @@
         <table id="result_list" class="table table-bordered">
             <thead class="table-dark">
                 <tr class="text-center">
+                    <th scope="col" class="add" colspan="2">
+                        <a href="{% url 'crear_mesa' %}" class="btn btn-outline-success"> <i
+                                class="bi bi-calendar-plus"></i></a>
+                    </th>
                     <th scope="col" class="mesa-id-column">
                         <div class="text"><span>Numero de Mesa</span></div>
                         <div class="clear"></div>
@@ -46,6 +50,17 @@
             <tbody>
                 {% for mesa in mesas %}
                 <tr>
+                    <td>
+                        <a href="{% url 'solicitud_eliminar_mesa' mesa.id %}" class="btn btn-outline-danger">
+
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'modificar_mesa' mesa.id %}" class="btn btn-outline-warning">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </td>
                     <td class="field-id_mesa nowrap">
                         {{ mesa.numero }}
                     </td>

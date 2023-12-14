@@ -13,19 +13,25 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'css/reservaForm.css' %}">
-    <title>Listado de Reservas</title>
+    <title>Formulario</title>
 </head>
 
 <body>
     <div id="header-container">
         <div id="catalog-logo">
             <div id="catalog-logo">
-                <a href="{% url 'verMesas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}"
+                <a href="{% url 'verReservas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}"
                         class="restaurant-logo" alt="Logo"></a>
             </div>
         </div>
         <div id="catalog-title" class="text-center">
-            <h2 class="form-title">{% if reserva.id_reserva %}Modificando{% else %}Agendando {% endif %} Reserva</h2>
+            <h2 class="form-title">
+                {% if reserva.id %} 
+                MODIFICANDO 
+                {% else %}
+                 AGENDANDO 
+                {% endif %} 
+                 RESERVA</h2>
         </div>
     </div>
 
@@ -102,8 +108,9 @@
 
             </div>
         </form>
-        {% endblock %}
+
     </div>
+    {% endblock %}
     <!-- alertas -->
     {% if messages %}
     <div class="messages">
@@ -114,8 +121,9 @@
         </div>
         {% endfor %}
     </div>
-    {% endif %}
+        {% endif %}
 
+ 
 </body>
 
 </html>

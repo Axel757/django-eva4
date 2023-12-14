@@ -18,9 +18,14 @@
 
 <body class="container mt-5">
     <div id="header-container">
-        <!-- Your header content here -->
+        <div id="catalog-logo">
+            <a href="{% url 'verReservas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}" class="restaurant-logo" alt="Logo"></a>
+        </div>
+        <div id="catalog-title" class="text-center">
+            <H1 class="title">ELIMINANDO {% if reserva.id %} RESERVA {% elif cliente.id %} CLIENTE {% else %} MESA{% endif %}</H1>
+        </div>
     </div>
-
+    {% if reserva.id %}
     <br>
     <h2>¿Confirmar la eliminación de la reserva para {{ reserva.cliente }}?</h2>
     <br>
@@ -31,7 +36,7 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-outline-danger">
             <h3>
-                <i class="bi bi-x"><span></span>ELIMINAR RESERVA PARA {{ reserva.nombre_cliente }}</i>
+                <i class="bi bi-x"><span></span>ELIMINAR RESERVA PARA {{ reserva.cliente }}</i>
             </h3>
         </button>
     </form>
@@ -39,7 +44,51 @@
     <a href="{% url 'verReservas' %}" class="btn btn-outline-secondary">
         <h3><i class="bi bi-check-lg"><span></span>REGRESAR</i></h3>
     </a>
+    {% endif %}
 
+
+
+
+    {% if cliente.id %}
+    <br>
+    <h2>¿Confirmar la eliminación del cliente {{ cliente }}?</h2>
+    <br>
+    <br>
+    <form method="post" action="{% url 'eliminar_cliente' cliente.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">
+            <h3>
+                <i class="bi bi-x"></i> Eliminar al Cliente: {{ cliente }}
+            </h3>
+        </button>
+    </form>
+    <br>
+    <a href="{% url 'verClientes' %}" class="btn btn-outline-secondary">
+        <h3><i class="bi bi-check-lg"></i> REGRESAR</h3>
+    </a>
+
+    {% endif%}
+
+    
+    {% if mesa.numero %}
+    <br>
+    <h2>¿Confirmar la eliminación de la mesa{{  mesa.numero }}?</h2>
+    <br>
+    <br>
+    <form method="post" action="{% url 'eliminar_mesa' mesa.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">
+            <h3>
+                <i class="bi bi-x"></i> Eliminar la Mesa: {{  mesa.numero }}
+            </h3>
+        </button>
+    </form>
+    <br>
+    <a href="{% url 'verMesas' %}" class="btn btn-outline-secondary">
+        <h3><i class="bi bi-check-lg"></i> REGRESAR</h3>
+    </a>
+
+    {% endif%}
 </body>
 
 </html>

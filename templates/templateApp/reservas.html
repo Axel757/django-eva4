@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="es">
-    {% load static %}
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,29 +16,31 @@
     <title>Listado de Reservas</title>
 </head>
 
-<body>    
-<div id="header-container">
-    <div id="catalog-logo">
+<body>
+    <div id="header-container">
         <div id="catalog-logo">
-            <a href="{% url 'verMesas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}" class="restaurant-logo" alt="Logo"></a>
+            <div id="catalog-logo">
+                <a href="{% url 'verMesas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}"
+                        class="restaurant-logo" alt="Logo"></a>
+            </div>
         </div>
-    </div>
-    <div id="catalog-title" class="text-center">
-        <H1 class="title">LISTADO DE RESERVAS</H1>
+        <div id="catalog-title" class="text-center">
+            <H1 class="title">LISTADO DE RESERVAS</H1>
+
+        </div>
 
     </div>
-
-</div>
-<br>
+    <br>
 
     <div class="results">
 
         <table id="result_list" class="table table-bordered">
 
             <thead class="table-dark">
-                <tr class="text-center"  >
+                <tr class="text-center">
                     <th scope="col" class="add" colspan="2">
-                        <a href="{% url 'agendar_reservas' %}"  class="btn btn-outline-success"> <i class="bi bi-calendar-plus"></i></a>
+                        <a href="{% url 'agendar_reservas' %}" class="btn btn-outline-success"> <i
+                                class="bi bi-calendar-plus"></i></a>
                     </th>
                     <th scope="col" class="reserva-id-column">
                         <div class="text"><span>ID de Reserva</span></div>
@@ -78,7 +81,7 @@
             </thead>
             <tbody>
                 {% for reserva in reservas %}
-                <tr >
+                <tr>
                     <td>
                         <a href="{% url 'solicitareliminacion' reserva.id %}" class="btn btn-outline-danger">
                             <i class="bi bi-trash"></i>
@@ -90,10 +93,10 @@
                         </a>
                     </td>
                     <td class="field-id_reserva nowrap">
-
                         {{ reserva.id}}
                     </td>
                     <td class="field-nombre_cliente nowrap">
+                        <a href="{% url 'detalle_clientes' reserva.id %}">
                             <h5>{{ reserva.nombre_cliente }}</h5>
                             <p>Teléfono: +56 {{ reserva.nombre_cliente.telefono }}</p>
                         </a>

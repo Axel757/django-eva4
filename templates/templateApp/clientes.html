@@ -29,6 +29,10 @@
         <table id="result_list" class="table table-bordered">
             <thead class="table-dark">
                 <tr class="text-center">
+                    <th scope="col" class="add" colspan="2">
+                        <a href="{% url 'crear_cliente' %}" class="btn btn-outline-success"> <i
+                                class="bi bi-calendar-plus"></i></a>
+                    </th>
                     <th scope="col" class="sortable column-nombre">
                         <div class="text">Nombre</div>
                         <div class="clear"></div>
@@ -46,13 +50,23 @@
             <tbody>
                 {% for cliente in clientes %}
                 <tr>
+                    <td>
+                        <a href="{% url 'solicitud_eliminar_cliente' cliente.id %}" class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'modificar_cliente' cliente.id %}" class="btn btn-outline-warning">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </td>
                     <td class="field-nombre nowrap">
                         <h5>{{ cliente.nombre }}</a></h5>
                     </td>
                     <td class="field-telefono nowrap">+56 {{ cliente.telefono }}</td>
                     <td class="field-reservas nowrap">
                         {% for reserva in cliente.reserva_set.all %}
-                        <a href="">
+                        <a href="{% url 'detalle_reservas' reserva.id %}">
                             {{ reserva.id_reserva }}: {{ reserva.fecha_reserva }} </a><br>
                         {% endfor %}
                     </td>

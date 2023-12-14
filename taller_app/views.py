@@ -27,13 +27,19 @@ def verClientes(request):
     data = {"clientes": clientes}
     return render(request, "templateApp/clientes.html", data)
 
-
-def reservas_clientes(request, nombre_cliente):
-    cliente = get_object_or_404(Cliente, nombre=nombre_cliente)
+def detalle_clientes(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
     reservas = cliente.reserva_set.all()
     data = {"reservas": reservas, "cliente": cliente}
-    return render(request, "templateApp/reservas.html", data)
+    return render(request, "templateApp/clientes.html", data)
 
+
+def detalle_reservas(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id)
+    print(reserva)
+    clientes =  reserva.cliente_set.all()
+    data = {"reserva": reserva, "clientes": clientes}
+    return render(request, "templateApp/clientes.html", data)
 
 # CRUD Reservas
 def agendar_reservas(request):
@@ -106,6 +112,104 @@ def eliminar_reserva(request, reserva_id):
     except Exception as e:
         return HttpResponse(f"Ocurrió un error: {str(e)}", status=500)
     
+ 
+
+#Crud clientes
+
+def crear_cliente(request):
+    if request.method == 'POST':
+        form = FormCliente(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('verClientes')
+    else:
+        form = FormCliente()
+
+    return render(request, 'templateForms/FormClientes.html', {'form': form}) 
+
+
+def solicitud_eliminar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    return render(request, 'templateForms/ConfirmarEliminarReserva.html', {'cliente': cliente})
+
+def eliminar_cliente(request, cliente_id):
+    try:
+        cliente = get_object_or_404(Cliente, id=cliente_id)
+    
+        if request.method == 'POST':
+            cliente.delete()
+            return HttpResponseRedirect(reverse('verClientes'))
+    except Http404:
+        return HttpResponse("cliente no encontrado", status=404)
+    except Exception as e:
+        return HttpResponse(f"Ocurrió un error: {str(e)}", status=500)
+    
+    
+
+def modificar_cliente(request, cliente_id=None):
+    # Verifica si se proporciona un ID de cliente
+    if cliente_id:
+        cliente = get_object_or_404(Cliente, id=cliente_id)
+        form = FormCliente(request.POST or None, instance=cliente)
+    else:
+        form = FormCliente(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('verClientes')
+
+    return render(request, 'templateForms/FormClientes.html', {'form': form})    
+    
+    
+#Crud Mesa
+
+def crear_mesa(request):
+    if request.method == 'POST':
+        form = MesaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('verMesas')
+    else:
+        form = MesaForm()
+
+    return render(request, 'templateForms/FormMesas.html', {'form': form})
+
+def solicitud_eliminar_mesa(request, mesa_id):
+    mesa = get_object_or_404(Mesa, id=mesa_id)
+    return render(request, 'templateForms/ConfirmarEliminarReserva.html', {'mesa': mesa})
+
+def eliminar_mesa(request, mesa_id):
+    try:
+        mesa = get_object_or_404(Mesa, id=mesa_id)
+    
+        if request.method == 'POST':
+            mesa.delete()
+            return HttpResponseRedirect(reverse('verMesas'))
+        elif request.method == 'GET':
+            # Aquí puedes redirigir o renderizar una plantilla de confirmación
+            return render(request, 'templateForms/ConfirmarEliminarReserva.html', {'mesa': mesa})
+    except Http404:
+        return HttpResponse("Mesa no encontrada", status=404)
+    except Exception as e:
+        return HttpResponse(f"Ocurrió un error: {str(e)}", status=500)
+
+def modificar_mesa(request, mesa_id=None):
+    # Verifica si se proporciona un ID de mesa
+    if mesa_id:
+        mesa = get_object_or_404(Mesa, id=mesa_id)
+        form = MesaForm(request.POST or None, instance=mesa)
+    else:
+        form = MesaForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('verMesas')
+
+    return render(request, 'templateForms/FormMesas.html', {'form': form})
+ 
+ 
     
 # Rest Framework API
 

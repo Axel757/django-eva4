@@ -45,3 +45,6 @@ class Reserva(models.Model):
         super().save()
     def __str__(self):
         return f"Reserva de {self.nombre_cliente} para {self.cantidad_personas} personas el {self.fecha_reserva} a las {self.hora_reserva}"
+    
+    class Meta:
+        ordering = ['fecha_reserva'] 

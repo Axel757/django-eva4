@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/reservaForm.css' %}">
+    <title>Formulario de Mesas</title>
+</head>
+<body>
+    <div id="header-container">
+        <div id="catalog-logo">
+            <a href="{% url 'verReservas' %}"><img src="{% static 'img/logos/restaurant-logo.png' %}" class="restaurant-logo" alt="Logo"></a>
+        </div>
+        <div id="catalog-title" class="text-center">
+            <H1 class="title">
+                {% if mesa.id %} 
+                MODIFICANDO MESA {{mesa.id}}
+                {% else %}
+                AGREGANDO MESA
+                {% endif %} 
+            </H1>
+        </div>
+    </div>
+
+{% block content %}
+<div class="formulario">
+
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="info">
+                                <h5><label for="nombre_cliente">Numero de Mesa</label></h5>
+                            </th>
+                            <td colspan="2" class="form">{{ form.numero }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="info">
+                                <h5><label for="id_fecha_reserva">Capacidad de Personas</label></h5>
+                            </th>
+                            <td colspan="2" class="form">{{ form.capacidad_personas }}</td>
+                        </tr>
+                        <tr>
+                            <th class="info">
+                                <h5><label for="estado">Estado</label></h5>
+                            </th>
+                            <td colspan="2" class="form">{{ form.estado }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                            </th>
+                            <td colspan="2" class="text-center">
+                                <button type="submit" class="btn btn-outline-success" id="btn-guardar">
+                                    {% if mesa.id %}
+                                    Modificar Mesa
+                                    {% else %}
+                                    Agregar Mesa
+                                    {% endif %}
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </form>
+    {% endblock %}
+</div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %} {{ message.tags }} {% endif %}">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
